@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,12 +24,19 @@ public class ChoiceActivity extends BaseActivity {
     private ChoiceAdapter adapter;
     private List<ConverterItem> choiceList;
 
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
 
+
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
 
         choiceList = new ArrayList<>();
         adapter = new ChoiceAdapter(this, choiceList);
@@ -38,28 +46,53 @@ public class ChoiceActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
+
         prepareAlbums();
 
     }
 
     private void prepareAlbums() {
-        int[] covers = new int[]{
-                R.drawable.ic_cook,
-                R.drawable.ic_currency,
-                R.drawable.ic_fuel,
-                R.drawable.ic_energy};
 
-        ConverterItem a = new ConverterItem("True Romance",covers[0]);
-        choiceList.add(a);
+        int[] icons = new int[]{
+                R.drawable.area,//
+                R.drawable.cooking,//
+                R.drawable.currency,//
+                R.drawable.storage,
+                R.drawable.energy,
+                R.drawable.fuel,//
+                R.drawable.lenght,
+                R.drawable.mass,
+                R.drawable.ic_power,
+                R.drawable.pressure,
+                R.drawable.speed,//
+                R.drawable.ic_temperature,//
+                R.drawable.time,//
+                R.drawable.ic_torque,
+                R.drawable.ic_volume,};
 
-        a = new ConverterItem("True Romance",covers[1]);
-        choiceList.add(a);
+        String[] texts = new String[]{
+                getString(R.string.area),
+                getString(R.string.cooking),
+                getString(R.string.currency),
+                getString(R.string.storage),
+                getString(R.string.energy),
+                getString(R.string.fuel_consumption),
+                getString(R.string.length),
+                getString(R.string.mass),
+                getString(R.string.power),
+                getString(R.string.pressure),
+                getString(R.string.speed),
+                getString(R.string.temperature),
+                getString(R.string.time),
+                getString(R.string.torque),
+                getString(R.string.volume)};
 
-        a = new ConverterItem("True Romance",covers[3]);
-        choiceList.add(a);
+        ConverterItem a;
+        for(int i=0;i<texts.length;i++){
+            a = new ConverterItem(texts[i],icons[i]);
+            choiceList.add(a);
+        }
 
-        a = new ConverterItem("True Romance",covers[2]);
-        choiceList.add(a);
 
 
 

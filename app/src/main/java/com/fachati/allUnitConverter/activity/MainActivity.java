@@ -3,11 +3,14 @@ package com.fachati.allUnitConverter.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,14 +23,83 @@ import com.fachati.allUnitConverter.util.Conversions;
 
 public class MainActivity extends BaseActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private DrawerLayout mDrawerLayout;
+    //private DrawerLayout mDrawerLayout;
     private Conversions mConversions;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         Preferences.getInstance(this).getPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        Bundle bundle = getIntent().getExtras();
+        int position=bundle.getInt("position");
+
+        int conversion=Conversion.AREA;
+        switch (position){
+            case 0:
+                conversion = Conversion.AREA;
+            break;
+
+            case 1:
+                conversion = Conversion.COOKING;
+            break;
+
+            case 3:
+                conversion = Conversion.STORAGE;
+            break;
+
+            case 4:
+                conversion = Conversion.ENERGY;
+            break;
+
+            case 5:
+                conversion = Conversion.FUEL;
+            break;
+
+            case 6:
+                conversion = Conversion.LENGTH;
+            break;
+
+            case 7:
+                conversion = Conversion.MASS;
+            break;
+
+            case 8:
+                conversion = Conversion.POWER;
+            break;
+
+            case 9:
+                conversion = Conversion.PRESSURE;
+            break;
+
+            case 10:
+                conversion = Conversion.SPEED;
+            break;
+
+            case 11:
+                conversion = Conversion.TEMPERATURE;
+            break;
+
+            case 12:
+                conversion = Conversion.TIME;
+            break;
+
+            case 13:
+                conversion = Conversion.TORQUE;
+            break;
+
+            case 14:
+                conversion = Conversion.VOLUME;
+            break;
+
+            case 2:
+                conversion = Conversion.CURRENCY;
+            break;
+        }
+
+
         mConversions = Conversions.getInstance();
 
         setContentView(R.layout.activity_main);
@@ -36,9 +108,8 @@ public class MainActivity extends BaseActivity implements SharedPreferences.OnSh
         if (getSupportActionBar() != null)
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
 
-        int conversion = Preferences.getInstance(this).getLastConversion();
-        setToolbarTitle(mConversions.getById(conversion).getLabelResource());
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //setToolbarTitle(mConversions.getById(conversion).getLabelResource());
+        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {}
@@ -55,6 +126,14 @@ public class MainActivity extends BaseActivity implements SharedPreferences.OnSh
             public void onDrawerStateChanged(int newState) {}
         });
         setupDrawer(getMenuPositionOfConversion(conversion));
+
+
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, ConversionFragment.newInstance(conversion))
+                    .commit();
+        }*/
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -84,7 +163,7 @@ public class MainActivity extends BaseActivity implements SharedPreferences.OnSh
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                mDrawerLayout.closeDrawers();
+                //mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
                     case R.id.drawer_settings:
                         PreferencesActivity.start(MainActivity.this);
@@ -207,7 +286,7 @@ public class MainActivity extends BaseActivity implements SharedPreferences.OnSh
         }
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -217,5 +296,5 @@ public class MainActivity extends BaseActivity implements SharedPreferences.OnSh
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 }

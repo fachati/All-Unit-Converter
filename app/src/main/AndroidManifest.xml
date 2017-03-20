@@ -17,12 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.PreferencesActivity"
-            android:label="@string/title_activity_settings"/>
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".activity.ChoiceActivity"></activity>
     </application>
-
-
 
 </manifest>
